@@ -1821,7 +1821,7 @@
                         <input type="hidden" name="step" value="second"/>
                         <input type="hidden" name="type" value="update"/>
                         <input type="hidden" name="type1" value="update"/>
-						<input type="hidden" name="applicant" value="update"/>
+						            <input type="hidden" name="applicant" value="update"/>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
