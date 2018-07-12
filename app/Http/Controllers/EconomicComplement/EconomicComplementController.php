@@ -58,7 +58,7 @@ class EconomicComplementController extends Controller
     public function index()
     {
         $procedures_e = EconomicComplementProcedure::orderBy('id','desc')->get();
-        
+
         $procedures =   ['' => ''];
 
         foreach ($procedures_e as $procedure) {
@@ -95,13 +95,13 @@ class EconomicComplementController extends Controller
 
 
         $economic_complements = EconomicComplement::
-            select(['economic_complements.id', 
+            select(['economic_complements.id',
                     'economic_complements.affiliate_id',
-                    'economic_complements.eco_com_modality_id', 
-                    'economic_complements.eco_com_state_id', 
-                    'economic_complements.code', 
+                    'economic_complements.eco_com_modality_id',
+                    'economic_complements.eco_com_state_id',
+                    'economic_complements.code',
                     'economic_complements.created_at',
-                    'economic_complements.reception_date', 
+                    'economic_complements.reception_date',
                     'economic_complements.total',
                     'economic_complements.wf_current_state_id',
                     'economic_complements.city_id',
@@ -113,7 +113,7 @@ class EconomicComplementController extends Controller
             //->leftJoin('affiliates','economic_complements.affiliate_id','=','affiliates.id')
             ->leftJoin('eco_com_applicants','eco_com_applicants.economic_complement_id','=','economic_complements.id')
             ->orderBy('created_at','desc');
-        //return $economic_complements->get();        
+        //return $economic_complements->get();
         try {
               $procedure_id = $request->get('eco_com_procedure_id');
         //    Log::info("obteniendo eco_com_procedure_id=".$procedure_id);
@@ -243,21 +243,21 @@ class EconomicComplementController extends Controller
         if($request->has('affiliate_last_name')){
             $affiliate_last_name = trim($request->get('affiliate_last_name'));
             $economic_complements->where(function($economic_complements) use ($affiliate_last_name)
-            {                    
+            {
                 $economic_complements->where('last_name', 'like', "{$affiliate_last_name}%");
             });
         }
         if($request->has('affiliate_mothers_last_name')){
             $affiliate_mothers_last_name = trim($request->get('affiliate_mothers_last_name'));
             $economic_complements->where(function($economic_complements) use ($affiliate_mothers_last_name)
-            {                    
+            {
                 $economic_complements->where('mothers_last_name', 'like', "{$affiliate_mothers_last_name}%");
             });
         }
         if($request->has('affiliate_first_name')){
             $affiliate_first_name = trim($request->get('affiliate_first_name'));
             $economic_complements->where(function($economic_complements) use ($affiliate_first_name)
-            {                    
+            {
                 $economic_complements->where('first_name', 'like', "{$affiliate_first_name}%");
             });
         }
@@ -404,7 +404,7 @@ class EconomicComplementController extends Controller
 
         // $moduleObservation=Auth::user()->roles()->first()->module->id;
         // $observations_types = $moduleObservation == 1 ? ObservationType::all() : ObservationType::where('module_id',$moduleObservation)->get();
-       
+
         // $observation_types_list = array('' => '');
         //     foreach ($observations_types as $item) {
         //         $observation_types_list[$item->id]=$item->name;
@@ -419,27 +419,27 @@ class EconomicComplementController extends Controller
             'pension_entities_list' => $pension_entities_list,
             'cities_list' => $cities_list,
             'cities_list_short' => $cities_list_short,
-           
+
             'months' => $months,
         ];
     }
 
     public function ReceptionFirstStep($affiliate_id)
     {
-        
+
         $getViewModel = self::getViewModel();
 
         $affiliate = Affiliate::idIs($affiliate_id)->first();
 
         //validaciones por exclusion
         $observaciones= AffiliateObservation::where('affiliate_id',$affiliate->id)->get();
-        
+
         foreach($observaciones as $observacion)
         {
             if($observacion->observationType->type == 'A')
             {
                 Session::flash('message','Para crear el tramite debe subsanar la(s) observaciones por exclusion');
-                return redirect('affiliate/'.$affiliate_id); 
+                return redirect('affiliate/'.$affiliate_id);
             }
         }
         // if($affiliate->getServiceYears()<16)
@@ -458,7 +458,7 @@ class EconomicComplementController extends Controller
             Session::flash('message', 'Debe subsanar las siguientes observaciones:'.$messages);
             return redirect('affiliate/'.$affiliate_id);
         }
-        
+
         $economic_complement = EconomicComplement::affiliateIs($affiliate_id)
         ->whereYear('year', '=', Util::getCurrentYear())
         ->where('semester', '=', 'Primer')->first();
@@ -481,7 +481,7 @@ class EconomicComplementController extends Controller
             $economic_complement->aps_total_fs = $last_complement->aps_total_fs ?? null;
             $economic_complement->total_rent = $last_complement->total_rent ?? null;
 
-          
+
         }else{
             $eco_com_type = $economic_complement->economic_complement_modality->economic_complement_type->name;
             $eco_com_modality = $economic_complement->economic_complement_modality->name;
@@ -541,18 +541,18 @@ class EconomicComplementController extends Controller
 
     public function ReceptionSecondStep($economic_complement_id)
     {
-        $economic_complement = EconomicComplement::idIs($economic_complement_id)->first();                
+        $economic_complement = EconomicComplement::idIs($economic_complement_id)->first();
         $affiliate = Affiliate::idIs($economic_complement->affiliate_id)->first();
-        
+
          //validaciones por exclusion
          $observaciones= AffiliateObservation::where('affiliate_id',$affiliate->id)->get();
-        
+
          foreach($observaciones as $observacion)
          {
              if($observacion->observationType->type == 'A')
              {
                  Session::flash('message','Para crear el tramite debe subsanar la(s) observaciones por exclusion');
-                 return redirect('affiliate/'.$affiliate_id); 
+                 return redirect('affiliate/'.$affiliate_id);
              }
          }
         $eco_com_applicant = EconomicComplementApplicant::economicComplementIs($economic_complement->id)->first();
@@ -654,13 +654,13 @@ class EconomicComplementController extends Controller
     {
          //validaciones por exclusion
          $observaciones= AffiliateObservation::where('affiliate_id',$affiliate->id)->get();
-        
+
          foreach($observaciones as $observacion)
          {
              if($observacion->observationType->type == 'A')
              {
                  Session::flash('message','Para crear el tramite debe subsanar la(s) observaciones por exclusion');
-                 return redirect('affiliate/'.$affiliate_id); 
+                 return redirect('affiliate/'.$affiliate_id);
              }
          }
         $getViewModel = self::getViewModel();
@@ -678,7 +678,7 @@ class EconomicComplementController extends Controller
             foreach($observations as $observation)
             {
                 $messages.= "<br>".$observation->message;
-            }            
+            }
             Session::flash('message', 'Debe subsanar las siguientes observaciones:'.$messages);
             return redirect('affiliate/'.$affiliate_id);
         }
@@ -730,9 +730,9 @@ class EconomicComplementController extends Controller
             $last_year_first = Util::getCurrentYear();
             $last_year_second = $last_year_first -1;
             $last_semester_second = 'Segundo';
-        
+
         $eco_com_reception_type = 'Inclusion';
-        
+
         $last_procedure_second = EconomicComplementProcedure::whereYear('year', '=', $last_year_second)->where('semester','like',$last_semester_second)->first();
         if (isset($last_procedure_second->id)) {
             if ($last_procedure_second->economic_complements()->where('affiliate_id','=',$affiliate_id)->first()) {
@@ -771,13 +771,13 @@ class EconomicComplementController extends Controller
 
          //validaciones por exclusion
          $observaciones= AffiliateObservation::where('affiliate_id',$affiliate->id)->get();
-        
+
          foreach($observaciones as $observacion)
          {
              if($observacion->observationType->type == 'A')
              {
                  Session::flash('message','Para crear el tramite debe subsanar la(s) observaciones por exclusion');
-                 return redirect('affiliate/'.$affiliate_id); 
+                 return redirect('affiliate/'.$affiliate_id);
              }
          }
 
@@ -835,13 +835,13 @@ class EconomicComplementController extends Controller
         $affiliate = Affiliate::idIs($economic_complement->affiliate_id)->first();
          //validaciones por exclusion
          $observaciones= AffiliateObservation::where('affiliate_id',$affiliate->id)->get();
-        
+
          foreach($observaciones as $observacion)
          {
              if($observacion->observationType->type == 'A')
              {
                  Session::flash('message','Para crear el tramite debe subsanar la(s) observaciones por exclusion');
-                 return redirect('affiliate/'.$affiliate_id); 
+                 return redirect('affiliate/'.$affiliate_id);
              }
          }
 
@@ -896,7 +896,7 @@ class EconomicComplementController extends Controller
             // dd($wf);
             $can_create =false;
             switch ($wf->role_id) {
-                
+
                 case 2:
                 case 4:
                 case 22:
@@ -908,11 +908,11 @@ class EconomicComplementController extends Controller
                     # code...
                     $can_create = true;
                     break;
-                
+
             }
             if($can_create)
             {
-                
+
                 $data = self::getViewModel();
                 $semester = $request->semester;
                 $affiliate = Affiliate::idIs($request->affiliate_id)->first();
@@ -922,7 +922,7 @@ class EconomicComplementController extends Controller
                 $economic_complement = EconomicComplement::affiliateIs($affiliate->id)
                 ->whereYear('year', '=', Util::getCurrentYear())
                 ->where('semester', '=', $semester)->first();
-                
+
                 $eco_com_modality = EconomicComplementModality::typeidIs(trim($request->eco_com_type))->first();
                 if (!$economic_complement) {
                     $economic_complement = new EconomicComplement;
@@ -944,7 +944,7 @@ class EconomicComplementController extends Controller
                     /*TODO
                     corregir
                      */
-                    // if ($request->semester == 'Primer' || $request->semester == 'Segundo') { 
+                    // if ($request->semester == 'Primer' || $request->semester == 'Segundo') {
                     //     $economic_complement->workflow_id = 3;
                     // }else{
                     $economic_complement->workflow_id = 1;
@@ -959,16 +959,16 @@ class EconomicComplementController extends Controller
 
                     $economic_complement->year = Util::datePickYear(Util::getCurrentYear());
                     $economic_complement->semester = $semester;
-                    
+
                     $economic_complement->has_legal_guardian =$request->has('has_legal_guardian')?true:false;
                     if($request->has('legal_guardian_sc'))
                     {
                         $economic_complement->has_legal_guardian_s = $request->legal_guardian_sc !='1'?true:false;
                     }
-                    
+
                     $economic_complement->code = $code ."/". $sem . "/" . Util::getCurrentYear();
 
-                    $economic_complement->reception_type = $request->reception_type; 
+                    $economic_complement->reception_type = $request->reception_type;
                     // $base_wage = BaseWage::degreeIs($affiliate->degree_id)->first();
                     // $economic_complement->base_wage_id = $base_wage->id;
                     // $economic_complement->complementary_factor_id = $complementary_factor->id;
@@ -1010,7 +1010,7 @@ class EconomicComplementController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($economic_complement)
-    {   
+    {
         //Log::info("show_id_complement= ".$economic_complement->id);
 
 
@@ -1030,12 +1030,12 @@ class EconomicComplementController extends Controller
                                      ->where('action','Denegar')
                                      ->get();
         // return $sequence;
-        
+
         // $sw_actual = WorkflowState::where('role_id',Util::getRol()->id)->first();
         $sw_actual = WorkflowState::where('id',$economic_complement->wf_current_state_id)->first();
 
         $buttons_enabled=false;
-        
+
         if($sw_actual)
         {
             if($sw_actual->id == $economic_complement->wf_state->id)
@@ -1043,11 +1043,11 @@ class EconomicComplementController extends Controller
                 $buttons_enabled =true;
             }
         }
-    
-        
+
+
 
         if($sequence)
-        {   
+        {
 
             $wf_state_before = array();
             foreach ($sequence as $s) {
@@ -1058,7 +1058,7 @@ class EconomicComplementController extends Controller
                 $wf_before = array('id'=>$wf->id,'name'=>$wf->name);
                 array_push($wf_state_before, $wf_before);
             }
-            // $wf_state_before = WorkflowState::where('id',$sequence->wf_state_next_id)->first(); 
+            // $wf_state_before = WorkflowState::where('id',$sequence->wf_state_next_id)->first();
         }else
         {
             $wf_state_before = null;
@@ -1068,12 +1068,12 @@ class EconomicComplementController extends Controller
         {
             $wf_state_before = null;
         }
-                                     
+
         $has_checked = null;
 
         if($economic_complement->wf_state->role_id == Util::getRol()->id && $economic_complement->state == "Received")
         {
-            $has_checked = true;   
+            $has_checked = true;
         }
 
         $affiliate = Affiliate::idIs($economic_complement->affiliate_id)->first();
@@ -1110,7 +1110,7 @@ class EconomicComplementController extends Controller
         $last_year = Util::getCurrentYear() - 1;
         /*CORREGIR ALERICK */
         $last_semester = "Primer";
-        
+
         if (EconomicComplement::affiliateIs($affiliate->id)
                 ->whereYear('year', '=', $last_year)
                 ->where('semester', '=', $last_semester)->first()) {
@@ -1271,7 +1271,7 @@ class EconomicComplementController extends Controller
                     if(Util::getRol()->module_id == 2 && $observation->is_enabled == false)
                     {
                         $hasObservation = true;
-                    }  
+                    }
                     # code...
 
                     break;
@@ -1279,39 +1279,39 @@ class EconomicComplementController extends Controller
                     if(Util::getRol()->module_id == $observation->observationType->module_id && $observation->is_enabled == false)
                     {
                         $hasObservation = true;
-                    } 
+                    }
                     break;
-                
+
             }
-            
+
         }
         // dd($hasObservation);
         // Log::info("has observatop ".json_encode($hasObservation));
         $hasAmortization = false;
         switch (Util::getRol()->id) {
-           
+
             case 16:
-           
+
                 if($hasObservation)
                 {
-                                      
+
                     if($economic_complement->eco_com_state_id=3 || $economic_complement->eco_com_state_id=2 || $economic_complement->eco_com_state_id=1 || $economic_complement->eco_com_state_id=18 || $economic_complement->eco_com_state_id=17 || $economic_complement->eco_com_state_id=21 )
                     {
-                        
+
                         // if($economic_complement->total > 0)
                         // {
-                            $hasAmortization =true; 
+                            $hasAmortization =true;
                         // }
-                        
+
                     }
 
-                     
+
                 }
-               
+
                 break;
              case 4:
              case 7:
-                
+
                 if($hasObservation)
                 {
                     $has_repocision_observation = false;
@@ -1326,7 +1326,7 @@ class EconomicComplementController extends Controller
                         {
                             $has_contabilidad_observation = true;
                         }
-                     } 
+                     }
                     if($has_repocision_observation || $has_contabilidad_observation)
                     {
 
@@ -1334,12 +1334,12 @@ class EconomicComplementController extends Controller
                         {
                             // if($economic_complement->total > 0)
                             // {
-                                $hasAmortization =true; 
+                                $hasAmortization =true;
                             // }
-                            
+
                         }
                     }
-                     
+
                 }
 
              break;
@@ -1351,7 +1351,7 @@ class EconomicComplementController extends Controller
         $has_cancel = false;
         if(Auth::user()->id == $economic_complement->user_id && $economic_complement->wf_state->role_id == Util::getRol()->id && $economic_complement->state=='Edited')
         {
-            $has_cancel =true;            
+            $has_cancel =true;
         }
 
         $states = null;
@@ -1359,13 +1359,13 @@ class EconomicComplementController extends Controller
         $has_edit_state =false;
         if(Util::getRol()->id == 9 || Util::getRol()->id == 4 )
         {
-            if($economic_complement->workflow_id != 1) //adicionar condicionantes en este punto 
+            if($economic_complement->workflow_id != 1) //adicionar condicionantes en este punto
             {
                 $has_edit_state =true;
-    
+
                 // $states = EconomicComplementState::where('eco_com_state_type_id',1)->get(); //solo los de tipo Pago
                 $states = EconomicComplementState::all();
-    
+
             }
         }
         //datos para el spouse
@@ -1403,7 +1403,7 @@ class EconomicComplementController extends Controller
         }
         $devolution_amount_percetage = null;
         $devolution_amount_total = null;
-        if($devolution){   
+        if($devolution){
             if ($devolution->percentage && $economic_complement->total > 0) {
                  $devolution_amount_percetage = floatval($economic_complement->total * $devolution->percentage);
             }elseif ($economic_complement->total > 0 && !$devolution->percentage) {
@@ -1422,7 +1422,7 @@ class EconomicComplementController extends Controller
 
 
         $observations_types = ObservationType::where('module_id',Util::getRol()->module_id)->where('type','T')->where('id','<>',11)->get();
-        
+
         $affiliate_observations = AffiliateObservation::where('affiliate_id',$economic_complement->affiliate_id)->get();
         foreach($affiliate_observations as $observation){
             if($observation->observationType->type=='AT')
@@ -1434,12 +1434,12 @@ class EconomicComplementController extends Controller
                 {
                     $new_observation = ObservationType::find($observation->observation_type_id);
                     $observations_types->push($new_observation);
-                    // ($observations_types,$new_observation);   
+                    // ($observations_types,$new_observation);
                 }
             }
         }
         // return $observations_types;
-        
+
         $data = [
 
         'affiliate' => $affiliate,
@@ -1536,7 +1536,7 @@ class EconomicComplementController extends Controller
      */
 
     public function update(Request $request, $economic_complement)
-    {   
+    {
         // Log::info("id".$economic_complements->id);
         return $this->save($request, $economic_complement);
     }
@@ -1550,7 +1550,7 @@ class EconomicComplementController extends Controller
             $rules = [
             'eco_com_type' => 'required',
             'city' => 'required',
-            ];
+          ];
 
             $messages = [
 
@@ -1597,7 +1597,7 @@ class EconomicComplementController extends Controller
                     $eco_com_applicant = new EconomicComplementApplicant;
                     $eco_com_applicant->economic_complement_id = $economic_complement->id;
                 }
-               
+
                 switch ($request->eco_com_type) {
                     case '1':
                     $eco_com_applicant->identity_card = $affiliate->identity_card;
@@ -1633,7 +1633,7 @@ class EconomicComplementController extends Controller
                         // $eco_com_applicant->is_duedate_undefined = $spouse->is_duedate_undefined;
 
                     }
-                    
+
 
                     $eco_com_applicant->nua = $affiliate->nua;
                     if ($affiliate->gender == 'M') { $eco_com_applicant->gender = 'F'; }else{ $eco_com_applicant->gender = 'M'; }
@@ -1646,19 +1646,19 @@ class EconomicComplementController extends Controller
 
                 $eco_com_applicant->save();
                 $eco_com_modality = EconomicComplementModality::typeidIs(trim($request->eco_com_type))->first();
-                //crear logica para el segundo semestre hdp 
+                //crear logica para el segundo semestre hdp
                 // $economic_complement->aps_total_cc = $request->aps_total_cc;
                 // $economic_complement->aps_total_fsa = $request->aps_total_fsa;
                 // $economic_complement->aps_total_fs = $request->aps_total_fs;
 
                 $economic_complement->eco_com_modality_id=$eco_com_modality->id;
                 $economic_complement->city_id = trim($request->city);
-               
+
                 $economic_complement->has_legal_guardian =$request->has('legal_guardian')?true:false;
-              
+
                 //Log::info($economic_complement->has_legal_guardian);
                 if($request->has('legal_guardian_sc'))
-                {   
+                {
                    //$v = $request->legal_guardian_sc =='1'?true:false;
                      // Log::info("legal_guardian_sc: ".$request->legal_guardian_sc);
                      // Log::info("v: ".$v);
@@ -1676,8 +1676,8 @@ class EconomicComplementController extends Controller
                      Log::info("complemento: ".$economic_complement->id);
 
 
-                    
-          
+
+
                 $economic_complement->state="Edited";
                 $economic_complement->reception_type = $request->reception_type;
                 $economic_complement->save();
@@ -1703,11 +1703,11 @@ class EconomicComplementController extends Controller
             case 'second':
 
             $rules = [
-
+              'birth_date' => 'date'
             ];
 
             $messages = [
-
+              'birth_date.date' => 'El formato de la fecha de nacimiento no es valida'
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
@@ -1716,7 +1716,7 @@ class EconomicComplementController extends Controller
                 if ($economic_complement->semester == 'Primer') {
                     return redirect('economic_complement_reception_second_step/' . $economic_complement->id)
                     ->withErrors($validator)
-                    ->withInput();    
+                    ->withInput();
                 }
                 return redirect('economic_complement_reception_second_step/' . $economic_complement->id.'/second')
                 ->withErrors($validator)
@@ -1734,7 +1734,7 @@ class EconomicComplementController extends Controller
                 $eco_com_applicant->mothers_last_name = $request->mothers_last_name;
                 $eco_com_applicant->first_name = $request->first_name;
                 $eco_com_applicant->second_name = $request->second_name;
-                $eco_com_applicant->surname_husband = $request->surname_husband;     
+                $eco_com_applicant->surname_husband = $request->surname_husband;
                 $eco_com_applicant->gender = $request->gender;
                 $eco_com_applicant->birth_date = Util::datePick($request->birth_date);
                 $eco_com_applicant->civil_status = $request->civil_status;
@@ -1746,7 +1746,7 @@ class EconomicComplementController extends Controller
                     $eco_com_applicant->cell_phone_number = trim(implode(",", $request->cell_phone_number_applicant));
                     $eco_com_applicant->date_death = Util::datePick($request->date_death);
                     $eco_com_applicant->reason_death = trim($request->reason_death);
-                    $eco_com_applicant->death_certificate_number = trim($request->death_certificate_number);                   
+                    $eco_com_applicant->death_certificate_number = trim($request->death_certificate_number);
                 }else{
                     $eco_com_applicant->phone_number = trim(implode(",", $request->phone_number));
                     $eco_com_applicant->cell_phone_number = trim(implode(",", $request->cell_phone_number));
@@ -1800,7 +1800,7 @@ class EconomicComplementController extends Controller
                             $spouse->first_name = trim($request->first_name);
                             $spouse->second_name = trim($request->second_name);
                             $spouse->civil_status = trim($request->civil_status);
-                            $spouse->surname_husband = trim($request->surname_husband);      
+                            $spouse->surname_husband = trim($request->surname_husband);
                             $spouse->birth_date = Util::datePick($request->birth_date);
                             $spouse->date_death = Util::datePick($request->date_death);
                             $spouse->reason_death = trim($request->reason_death);
@@ -1913,7 +1913,7 @@ class EconomicComplementController extends Controller
                 else{
                     if($economic_complement->semester == 'Primer'){
                         return redirect('economic_complement_reception_third_step/'.$economic_complement->id);
-                    }else{   
+                    }else{
                         return redirect('economic_complement_reception_third_step/'.$economic_complement->id.'/second');
                     }
                 }
@@ -1965,8 +1965,8 @@ class EconomicComplementController extends Controller
                         $eco_com_submitted_document->status = $item->status;
                         $eco_com_submitted_document->reception_date = date('Y-m-d');
                         $eco_com_submitted_document->save();
-                        
-                        
+
+
 
                         $wf_record=new WorkflowRecord;
                         $wf_record->user_id=Auth::user()->id;
@@ -1976,13 +1976,13 @@ class EconomicComplementController extends Controller
                         $wf_record->record_type_id=1;
                         $wf_record->message="El usuario ".Util::getFullNameuser()." modifico ".$eco_com_submitted_document->economic_complement_requirement->name." fecha ".Carbon::now().".";
                         $wf_record->save();
-                        
+
                     }
 
                 }
 
                 $economic_complement = EconomicComplement::idIs($economic_complement->id)->first();
-                
+
                 $economic_complement->save();
 
                 return redirect('economic_complement/'.$economic_complement->id);
@@ -2013,7 +2013,7 @@ class EconomicComplementController extends Controller
 
                             $eco_com_submitted_document = EconomicComplementSubmittedDocument::where('economic_complement_id', '=', $economic_complement->id)
                             ->where('eco_com_requirement_id', '=', $item->id)->first();
-                            
+
                            if (!$eco_com_submitted_document) {
                                 $eco_com_submitted_document = new EconomicComplementSubmittedDocument;
                                 $eco_com_submitted_document->economic_complement_id = $economic_complement->id;
@@ -2021,7 +2021,7 @@ class EconomicComplementController extends Controller
                                 $eco_com_submitted_document->status = $item->status;
                                 $eco_com_submitted_document->reception_date = date('Y-m-d');
                                 $eco_com_submitted_document->save();
-                              
+
 
                                 // $wf_record=new WorkflowRecord;
                                 // $wf_record->user_id=Auth::user()->id;
@@ -2049,8 +2049,8 @@ class EconomicComplementController extends Controller
                                 $eco_com_submitted_document->status = $item->status;
                                 $eco_com_submitted_document->reception_date = date('Y-m-d');
                                 $eco_com_submitted_document->save();
-                                 
-                                
+
+
                                 $wf_record=new WorkflowRecord;
                                 $wf_record->user_id=Auth::user()->id;
                                 $wf_record->date=Carbon::now();
@@ -2060,7 +2060,7 @@ class EconomicComplementController extends Controller
                                 $wf_record->message="El usuario ".Util::getFullNameuser()." modifico ".$eco_com_submitted_document->economic_complement_requirement->name." fecha ".Carbon::now().".";
                                 $wf_record->save();
 
-                     
+
 
 
                             }
@@ -2162,18 +2162,18 @@ class EconomicComplementController extends Controller
                             $economic_complement->review_date = date('Y-m-d');
                             break;
                         case 4:
-                            $economic_complement->calculation_date = date('Y-m-d');    
-                            
+                            $economic_complement->calculation_date = date('Y-m-d');
+
                             break;
                         case 5:
-                            $economic_complement->aprobation_date  = date('Y-m-d');    
-                            
+                            $economic_complement->aprobation_date  = date('Y-m-d');
+
                             break;
                     }
-                    
+
                 $economic_complement->state = 'Edited';
                 $economic_complement->save();
-                
+
                 return redirect('inbox');
                 // return redirect('economic_complement');
                 // return redirect('economic_complement/'.$economic_complement->id);
@@ -2196,7 +2196,7 @@ class EconomicComplementController extends Controller
                 else{
                     $economic_complement = EconomicComplement::idIs($economic_complement->id)->first();
                     $economic_complement->user_id = Auth::user()->id;
-                    
+
                     $role=Util::getRol();
 
                     switch ($role->id) {
@@ -2204,12 +2204,12 @@ class EconomicComplementController extends Controller
                             $economic_complement->review_date = null;
                             break;
                         case 4:
-                            $economic_complement->calculation_date = null;    
-                            
+                            $economic_complement->calculation_date = null;
+
                             break;
                         case 5:
-                            $economic_complement->aprobation_date  = null;    
-                            
+                            $economic_complement->aprobation_date  = null;
+
                             break;
                     }
 
@@ -2230,7 +2230,7 @@ class EconomicComplementController extends Controller
                 'sub_total_rent.min' => 'Debe de ingresar un monto mayor a 1 en la renta.',
                 'sub_total_rent.not_zero' => 'Debe ingresar un monto mayor a 0.',
                 'sub_total_rent.number_comma_dot' => 'Verifique que el monto ingresado este correcto.',
-                
+
             ];
             $validator = Validator::make($request->all(), $rules, $messages);
             if ($validator->fails()){
@@ -2445,8 +2445,8 @@ class EconomicComplementController extends Controller
             $eco_com_legal_guardian = EconomicComplementLegalGuardian::economicComplementIs($economic_complement->id)->first();
               $eco_com_legal_guardian->identity_card = $request->identity_card_lg;
               if ($request->city_identity_card_id_lg) { $eco_com_legal_guardian->city_identity_card_id = $request->city_identity_card_id_lg; } else { $eco_com_legal_guardian->city_identity_card_id = null; }
-             
-              
+
+
 
               $eco_com_legal_guardian->is_duedate_undefined =!$request->is_duedate_undefinedlg?false:true;
               if(!$eco_com_legal_guardian->is_duedate_undefined)
@@ -2457,7 +2457,7 @@ class EconomicComplementController extends Controller
                  }else{
                     $eco_com_legal_guardian->due_date = null;
                  }
-                 
+
               }
 
 
@@ -2466,7 +2466,7 @@ class EconomicComplementController extends Controller
                 $economic_complement->month_id = $request->month_id==''?null:$request->month_id;
                 $economic_complement->save();
               // }
-              
+
               $eco_com_legal_guardian->last_name = $request->last_name_lg;
               $eco_com_legal_guardian->mothers_last_name = $request->mothers_last_name_lg;
               $eco_com_legal_guardian->first_name = $request->first_name_lg;
@@ -2494,7 +2494,7 @@ class EconomicComplementController extends Controller
         //
     }
 
-    
+
     public function print_sworn_declaration($economic_complement_id,$type)
     {
       $header1 = "DIRECCIÓN DE BENEFICIOS ECONÓMICOS";
@@ -2590,7 +2590,7 @@ class EconomicComplementController extends Controller
                 $title= "RECEPCIÓN DE REQUISITOS";
                 array_push($data,$title);
                 return \PDF::loadView('economic_complements.print.reception_report', $data)->setPaper('letter')->setOPtion('footer-left', 'PLATAFORMA VIRTUAL DE LA MUSERPOL - 2018')->stream('report_edited.pdf');
-                
+
                 $view = \View::make('economic_complements.print.reception_report', compact('header1', 'header2', 'title','date','hour','economic_complement','eco_com_submitted_document','affiliate','eco_com_applicant','user', 'user_role','yearcomplement'))->render();
                 $pdf = \App::make('dompdf.wrapper');
                 $pdf->loadHTML($view)->setPaper('legal');
@@ -2600,7 +2600,7 @@ class EconomicComplementController extends Controller
                 $title= "";
                 array_push($data,$title);
                 return \PDF::loadView('economic_complements.print.inclusion_solicitude', $data)->setPaper('letter')->setOPtion('footer-left', 'PLATAFORMA VIRTUAL DE LA MUSERPOL - 2018')->stream('report_edited.pdf');
-                
+
                 $view = \View::make('economic_complements.print.inclusion_solicitude', compact('header1','header2','title','date','hour','economic_complement','eco_com_submitted_document','affiliate','eco_com_applicant','applicant_type', 'user', 'user_role'))->render();
 
                 $pdf = \App::make('dompdf.wrapper');
@@ -2636,7 +2636,7 @@ class EconomicComplementController extends Controller
     public function get_record(Request $request)
     {
         Log::info($request->id);
-       
+
         $new_records = EconomicComplementRecord::select('created_at','message')->where('economic_complement_id',$request->id)->get();
         $records =  WorkflowRecord::select('created_at', 'message')->where('eco_com_id', $request->id)->orderBy('created_at', 'desc')->get();
         $history  = collect();
@@ -2646,7 +2646,7 @@ class EconomicComplementController extends Controller
         foreach($records as $record){
             $history->push(array('created_at'=>$record->created_at,'message'=>$record->message));
         }
-   
+
         return Datatables::of($history)
             ->editColumn('created_at', '{!! $created_at !!}')
             ->make(true);
@@ -2665,7 +2665,7 @@ class EconomicComplementController extends Controller
             $last_year_second = $last_year_first;
         }else{
             $last_semester_first = 'Primer';
-            $last_semester_second = 'Segundo';  
+            $last_semester_second = 'Segundo';
             $last_year_first = Util::getCurrentYear() ;
             $last_year_second = $last_year_first -1;
         }
@@ -2697,14 +2697,14 @@ class EconomicComplementController extends Controller
 
     public function save_amortization(Request $request)
     {
-        
+
         $start_procedure = EconomicComplementProcedure::where('id','=', 2)->first();
         $rol = Util::getRol();
         if($request->amount_amortization > 0)
         {
             switch ($rol->id) {
                 case 7: //contabiliadad
-                    
+
                     $complemento = EconomicComplement::where('id',$request->id_complemento)->first();
                     $complemento->amount_accounting = $request->amount_amortization;
                     $complemento->save();
@@ -2720,8 +2720,8 @@ class EconomicComplementController extends Controller
 
                     break;
 
-                case 16: //prestamo 
-                    
+                case 16: //prestamo
+
                     $complemento = EconomicComplement::where('id',$request->id_complemento)->first();
                     $complemento->amount_loan = $request->amount_amortization;
                     $complemento->save();
@@ -2736,9 +2736,9 @@ class EconomicComplementController extends Controller
                     $wf_record->save();
 
                     break;
-                
+
                 case 4: //complemento
-                    
+
                     $complemento = EconomicComplement::where('id',$request->id_complemento)->first();
                     $complemento->amount_replacement = $request->amount_amortization;
                     $complemento->save();
@@ -2768,11 +2768,11 @@ class EconomicComplementController extends Controller
                     $wf_record->save();
 
                     break;
-                
+
             }
             Session::flash('message', 'Se guardo la Amortización.');
-            
-            if ($complemento->total_rent > 0 ) {   
+
+            if ($complemento->total_rent > 0 ) {
                 EconomicComplement::calculate($complemento,$complemento->total_rent, $complemento->sub_total_rent, $complemento->reimbursement, $complemento->dignity_pension, $complemento->aps_total_fsa, $complemento->aps_total_cc, $complemento->aps_total_fs, $complemento->aps_disability);
                 $complemento->save();
             }
@@ -2780,8 +2780,8 @@ class EconomicComplementController extends Controller
         else{
             Session::flash('message', 'El Monto de amortizacion debe ser mayor a 0 ');
         }
-        
-        
+
+
         return back()->withInput();
     }
 
@@ -2794,7 +2794,7 @@ class EconomicComplementController extends Controller
         //                              ->where("wf_state_current_id",$economic_complement->wf_current_state_id)
         //                              ->where('action','Denegar')
         //                              ->first();
-        // $wf_state_before = WorkflowState::where('id',$sequence->wf_state_next_id)->first(); 
+        // $wf_state_before = WorkflowState::where('id',$sequence->wf_state_next_id)->first();
         $economic_complement->wf_current_state_id = $request->wf_state_id;
         $economic_complement->state= 'Received';
         $economic_complement->save();
@@ -2892,7 +2892,7 @@ class EconomicComplementController extends Controller
                 $spouse->city_birth_id = $request->city_birth_id;
                 $spouse->civil_status = trim($request->civil_status);
                 $spouse->registration=0;
-     
+
                 $spouse->save();
 
                 $message = "Información de Conyuge actualizado con éxito";
@@ -2923,18 +2923,18 @@ class EconomicComplementController extends Controller
             $nrev=0;
             $ecom1 = EconomicComplement::where('eco_com_procedure_id','=',2)
                                         ->whereIn('eco_com_state_id',[1,18,17])->get();
-            foreach ($ecom1 as $dato) 
-            {   
+            foreach ($ecom1 as $dato)
+            {
                  $actual = EconomicComplement::where('eco_com_procedure_id','=',6)
                                         ->where('wf_current_state_id','=',3)
                                         ->where('economic_complements.reception_type','=','Habitual')
                                         ->where('state','=','Received')
                                         ->where('affiliate_id','=',$dato->affiliate_id)->first();
                 if($actual)
-                {   
+                {
                     $actual->state='Edited';
                     $date = Carbon::Now();
-                    $actual->review_date =$date; 
+                    $actual->review_date =$date;
                     $actual->save();
                     $rev++;
                 }
@@ -2959,11 +2959,11 @@ class EconomicComplementController extends Controller
                       set_time_limit('-1');
                       $results = collect($reader->get());
                 });
-                
-               foreach ($results as $result) 
+
+               foreach ($results as $result)
                {
                      $ci = $result->ci;
-                    
+
                      if($result->tipo_renta == "VEJEZ")
                      {   //dd($result->tipo_renta."hola");
                         $app=EconomicComplementApplicant::leftJoin('economic_complements','eco_com_applicants.economic_complement_id','=','economic_complements.id')
@@ -2979,26 +2979,26 @@ class EconomicComplementController extends Controller
                                                      ->where('economic_complements.state','=','Received')
                                                      ->select('economic_complements.id','economic_complements.affiliate_id')
                                                      ->first();
-                       
+
                          if($app)
-                         {   
-                             $ecom = EconomicComplement::where('id','=',$app->id)->first();                     
+                         {
+                             $ecom = EconomicComplement::where('id','=',$app->id)->first();
                              $ecom->state = 'Edited';
                              $date = Carbon::Now();
-                             $ecom->review_date =$date; 
-                             $ecom->save(); 
+                             $ecom->review_date =$date;
+                             $ecom->save();
                             // dd($ecom->id);
                              $rev++;
                          }else
                          {
-                              
+
                              //  $this->info("Vejez: ".$result->ci);
                             $nrev = $nrev."-".$result->ci;
                          }
-                     
+
                      }
                      elseif($result->tipo_renta =='VIUDEDAD')
-                     {   
+                     {
                         $app=EconomicComplementApplicant::leftJoin('economic_complements','eco_com_applicants.economic_complement_id','=','economic_complements.id')
                                                     ->leftJoin('affiliates','economic_complements.affiliate_id','=','affiliates.id')
                                                     ->leftJoin('eco_com_modalities','economic_complements.eco_com_modality_id','=','eco_com_modalities.id')
@@ -3012,13 +3012,13 @@ class EconomicComplementController extends Controller
                                                     ->where('economic_complements.state','=','Received')
                                                     ->select('economic_complements.id','economic_complements.affiliate_id')
                                                     ->first();
-                        //dd($app."--");        
+                        //dd($app."--");
                          if($app)
                          {   $ecom = EconomicComplement::where('id','=',$app->id)->first();
                              $ecom->state='Edited';
                              $date = Carbon::Now();
-                             $ecom->review_date =$date; 
-                             $ecom->save(); 
+                             $ecom->review_date =$date;
+                             $ecom->save();
                              // dd($ecom->id." Viu");
                              $rev++;
                          }

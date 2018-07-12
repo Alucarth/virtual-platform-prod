@@ -18,7 +18,7 @@
 		{!! Breadcrumbs::render('show_economic_complement', $economic_complement) !!}
 	</div>
 	<div class="col-md-6">
-    
+
        @can('eco_com_reception')
          @if( $economic_complement->reception_type == 'Inclusion' )
 
@@ -26,11 +26,11 @@
                 @if($economic_complement->economic_complement_modality->economic_complement_type->id>1)
                     <a href="" class="btn btn-sm btn-raised btn-success dropdown-toggle enabled" data-toggle="modal" value="Print" onclick="printJS({printable:'{!! url('print_sworn_declaration/' . $economic_complement->id . '/viudedad') !!}', type:'pdf', showModal:true})">
                         &nbsp;<span class="glyphicon glyphicon-print"></span>&nbsp;
-                    </a> 
+                    </a>
                 @else
                     <a href="" class="btn btn-sm btn-raised btn-success dropdown-toggle enabled" data-toggle="modal" value="Print" onclick="printJS({printable:'{!! url('print_sworn_declaration/' . $economic_complement->id . '/vejez') !!}', type:'pdf', showModal:true})">
                         &nbsp;<span class="glyphicon glyphicon-print"></span>&nbsp;
-                    </a> 
+                    </a>
                 @endif
             </div>
         @endif
@@ -45,7 +45,7 @@
                 </div>
             @endif
         @endcan
-        
+
         {{-- @can('eco_com_qualification')
             @if($economic_complement->total> 0)
                 <div class="btn-group" data-toggle="tooltip" data-placement="top" data-original-title="Imprimir comprobante de respaldo" style="margin:0px;">
@@ -54,7 +54,7 @@
             @endif
         @endcan --}}
         @if($has_amortization)
-       
+
                 <div class="btn-group" data-toggle="tooltip" data-placement="top" data-original-title="Amortización" style="margin:0px;">
                     <a href="#" class="btn btn-sm btn-raised btn-success dropdown-toggle enabled"  data-toggle="modal" data-target="#amortization-modal" >
                         &nbsp;<span class="fa fa-money"></span>&nbsp;
@@ -71,7 +71,7 @@
 
         </div>
         @endcan
-       
+
         <div class="btn-group">
             <span data-toggle="modal" data-target="#recordEcoModal">
                 <a href="#" class="btn btn-sm btn-raised btn-lg bg-blue"  data-toggle="tooltip"  data-placement="top" data-original-title="Historial"><i class="fa fa-lg fa-clock-o"></i></a>
@@ -85,17 +85,17 @@
         <div class="pull-right">
 
             @if($buttons_enabled)
-                    
-                
+
+
             <!-- <div class="btn-group">
                 <span data-toggle="tooltip" data-placement="top" data-original-title="ver" style="margin:0px;">
                     <a href="" data-target="#myModal-review-user" class="btn btn-sm btn-raised btn-{{ $economic_complement->stateOf() ? 'info' : 'warning'}} dropdown-toggle enabled" data-toggle="modal"> <strong>{{ $economic_complement->stateOf() ? "Revisado":"No revisado"}}</strong></a>
                 </span>
             </div> -->
-            
-           
-                
-            
+
+
+
+
                         @if($has_cancel)
                             <div class="btn-group">
                                 <span data-toggle="tooltip" data-placement="top" data-original-title="Cancelar" style="margin:0px;">
@@ -111,7 +111,7 @@
                         </div>
                         @endif
             @endif
-          
+
 
         </div>
     </div>
@@ -883,7 +883,7 @@
                         <div data-toggle="tooltip" data-placement="right" data-original-title="Ver Observaciones Eliminadas">
                             <div class="togglebutton">
                                 <label>
-                                    <input type="checkbox" id="seeObservations"> 
+                                    <input type="checkbox" id="seeObservations">
                                 </label>
                             </div>
                         </div>
@@ -893,7 +893,7 @@
                 <div class="box-body">
                   <div class="box-group" id="accordion">
                     <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
-                    
+
                     <div class="panel box box-danger">
                       <div class="box-header with-border">
                         <h4 class="box-title">
@@ -913,7 +913,7 @@
                         <div class="box-body">
                             <div class="row">
                                     <div class="col-md-12">
-                                       
+
                                         <table class="table table-bordered table-hover table-striped" id="economic-observations-table">
                                             <thead>
                                                 <tr class="success">
@@ -936,7 +936,7 @@
                             <a data-toggle="collapse" data-parent="#accordion" href="#note_observations">
                                 Notas  <span class="badge">{{ $notes_quantity }}</span>
                           </a>
-                         
+
                         </h4>
                         <div class="box-tools pull-right">
                                 <div data-toggle="tooltip" data-placement="left" data-original-title="Añadir">
@@ -950,7 +950,7 @@
                         <div id="note_observations" class="panel-collapse collapse">
                         <div class="box-body">
                                 <div class="row">
-                                       
+
                                     <div class="col-md-12">
                                         <table class="table table-bordered table-hover table-striped" id="notes-table">
                                             <thead>
@@ -962,7 +962,7 @@
                                             </thead>
                                         </table>
                                     </div>
-                                
+
                                 </div>
                         </div>
                       </div>
@@ -974,13 +974,13 @@
                             <a data-toggle="collapse" data-parent="#accordion" href="#observations_eliminated">
                                 Eliminados  <span class="badge">{{ $observations_eliminated }}</span>
                           </a>
-                         
-                        </h4>          
+
+                        </h4>
                       </div>
                         <div id="observations_eliminated" class="panel-collapse collapse">
                         <div class="box-body">
                                 <div class="row">
-                                       
+
                                     <div class="col-md-12">
                                         <table class="table table-bordered table-hover table-striped" id="eliminated-table">
                                             <thead>
@@ -993,12 +993,12 @@
                                             </thead>
                                         </table>
                                     </div>
-                                
+
                                 </div>
                         </div>
                       </div>
                     </div>
-                   
+
                   </div>
                 </div>
                 <!-- /.box-body -->
@@ -1111,7 +1111,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                </tr> 
+                                </tr>
                                 <tr>
                                     <td style="border-top:0px;;">
                                         <div class="row">
@@ -1651,7 +1651,7 @@
                                             </div>
 
                                         </div>
-                                 
+
                                         <div class="togglebutton">
                                             <label>
                                                 <input type="checkbox" name="is_duedate_undefined"  data-bind="checked: is_affiliate_duedate_undefined, click: inputAffiliateVisible()"> Indefinida
@@ -1821,7 +1821,7 @@
                         <input type="hidden" name="step" value="second"/>
                         <input type="hidden" name="type" value="update"/>
                         <input type="hidden" name="type1" value="update"/>
-						<input type="hidden" name="applicant" value="update"/>
+						            <input type="hidden" name="applicant" value="update"/>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -1834,7 +1834,7 @@
                                             {!! Form::select('city_identity_card_id', $cities_list_short, $eco_com_applicant->city_identity_card_id, ['class' => 'col-md-2 combobox form-control', 'required']) !!}
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                         {!! Form::label('last_name', 'Apellido Paterno', ['class' => 'col-md-5 control-label']) !!}
                                     <div class="col-md-6">
@@ -1849,7 +1849,7 @@
                                         <span class="help-block">Escriba el Apellido Materno</span>
                                     </div>
                                 </div>
-                                 
+
                                 <div class="form-group">
                                         {!! Form::label('surname_husband', 'Apellido de Esposo', ['class' => 'col-md-5 control-label']) !!}
                                     <div class="col-md-6">
@@ -1857,7 +1857,7 @@
                                         <span class="help-block">Escriba el Apellido de Esposo (Opcional)</span>
                                     </div>
                                 </div>
-                                 
+
                                 <div class="form-group">
                                         {!! Form::label('first_name', 'Primer Nombre', ['class' => 'col-md-5 control-label']) !!}
                                     <div class="col-md-6">
@@ -1928,7 +1928,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    
+
                                     <div class="col-md-6">
                                         <div class="togglebutton">
                                             <label>
@@ -1955,7 +1955,7 @@
                                         {!! Form::label('birth_date', 'Fecha de Nacimiento', ['class' => 'col-md-5 control-label']) !!}
                                     <div class="col-md-6">
                                         <div class="input-group">
-                                            <input type="text" id="birth_date_mask" class="form-control" name="birth_date" value="{!! $eco_com_applicant->getEditBirthDate() !!}" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                            <input type="text" id="birth_date_spouse_mask" class="form-control" name="birth_date" value="{!! $eco_com_applicant->getEditBirthDate() !!}" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
                                             <div class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </div>
@@ -1969,10 +1969,10 @@
                                             <span class="help-block">Seleccione Departamento</span>
                                         </div>
                                     </div>
-                                
-                                
 
-                                
+
+
+
                                 {{-- <div class="form-group">
                                         {!! Form::label('nua', 'CUA/NUA', ['class' => 'col-md-5 control-label']) !!}
                                     <div class="col-md-6">
@@ -2123,7 +2123,7 @@
                                         <div class="col-md-6">
                                         {!! Form::select('month_id',$months,$economic_complement->month_id,['class' => 'col-md-5 combobox form-control']) !!}
                                         </div>
-                                   
+
                                 </div>
                                 @endif
 
@@ -2144,8 +2144,8 @@
                                                 </label>
                                             </div>
                                         </div>
-                                    
-                                   
+
+
                                 </div>
                                 <div class="form-group">
                                         {!! Form::label('first_name_lg', 'Primer Nombre', ['class' => 'col-md-5 control-label']) !!}
@@ -2270,7 +2270,7 @@
                                 <div class="col-md-12">
                                     @if($economic_complement->affiliate->pension_entity)
                                         @if($economic_complement->affiliate->pension_entity->name != 'SENASIR')
-                                        <div class="col-md-6">     
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 {!! Form::label('aps_total_fsa', 'Fraccion de Saldo Acumulado', ['class' => 'col-md-5 control-label']) !!}
                                                 <div class="col-md-6">
@@ -2344,7 +2344,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -2429,7 +2429,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
     <div id="myModal-requirements" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -2440,7 +2440,7 @@
                 <div class="box-body" data-bind="event: {mouseover: save, mouseout: save}">
                     {!! Form::model($economic_complement, ['method' => 'PATCH', 'route' => ['economic_complement.update', $economic_complement->id], 'class' => 'form-horizontal']) !!}
                         <input type="hidden" name="step" value="third"/>
-                      
+
                         <div class="row">
                             <div class="col-md-12">
                                 <table class="table table-bordered table-hover" style="font-size: 16px">
@@ -2780,7 +2780,7 @@
                     </div>
                 </div>
     </div>
-    
+
     <div id="debtsModal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -2910,7 +2910,7 @@
                 <div class="modal-body">
                    <h4> <span id="observation_name" class="label label-danger"></span> </h4>
                     {!! Form::label('observation_type_id_edit', 'Tipo', ['class'=>'selItem']) !!}
-                       
+
                     <div class="form-group">
                         <select class="form-control  selItem" name="observation_type_id" id='observation_type_id_edit'  >
                             <option value=''> </option>
@@ -2975,7 +2975,7 @@
                             <button type="submit" class="btn btn-raised btn-success" data-toggle="tooltip" data-placement="bottom" data-original-title="Guardar">&nbsp;<span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;</button>
                         </div>
                     </div>
-                    
+
                 </div>
                 {!! Form::close() !!}
             </div>
@@ -3004,14 +3004,14 @@
     </div>
     @if($has_amortization)
     <form  action="{{url('save_amortization')}}" method="POST">
-            
-        
-        
+
+
+
         <div id="amortization-modal" class="modal fade" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document"observation_id_delete>
             <div class="modal-content">
               <div class="modal-header">
-                 <input type="hidden" name="_token" value="{{ csrf_token() }}">  
+                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Amortizar<observation_id_delete/h4>
               </div>
@@ -3032,7 +3032,7 @@
                         @endif
                     @endif
                 </div>
-                
+
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -3045,12 +3045,12 @@
     </form>
     @endif
     <form  action="{{url('moreInfo')}}" method="POST">
-        
+
         <div id="addMoreInfo" class="modal fade" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                 <input type="hidden" name="_token" value="{{ csrf_token() }}">  
+                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title"> Adicionar Informacion </h4>
               </div>
@@ -3072,7 +3072,7 @@
                     @endcan
 
                 </div>
-                
+
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -3095,17 +3095,17 @@
                     <div class="col-md-12">
                       <div class="togglebutton">
                           <label>
-                            <input type="checkbox" data-bind="checked: is_paid_spouse" name="is_paid_spouse"> 
+                            <input type="checkbox" data-bind="checked: is_paid_spouse" name="is_paid_spouse">
                           </label>
-                      </div>    
+                      </div>
                     </div>
-                    
+
                 </div>
                 <div class="modal-body">
 
-                  
+
                     <input type="hidden" name="complement_id" value="{{$economic_complement->id}}">
-                   
+
                     <div class="row"  data-bind="visible: is_paid_spouse">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -3147,15 +3147,15 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    
+
                                         {!! Form::label('identity_card', ' Carnet de Identidad', ['class' => 'col-md-5 control-label']) !!}
                                     <div class="col-md-4">
                                         {!! Form::text('identity_card', $spouse?$spouse->identity_card:null, ['class'=> 'form-control', 'data-bind' => 'attr: {required: is_paid_spouse']) !!}
                                         <span class="help-block">Escriba el Carnet de Identidad</span>
-                                       
+
                                     </div>
                                     <div class="col-md-2">
-                                        
+
                                     {!! Form::select('city_identity_card_id', $cities_list_short, $spouse?$spouse->city_identity_card_id:null, ['class' => 'col-md-2 form-control','data-bind' => 'attr: {required: is_paid_spouse}']) !!}
                                     </div>
                                      <br>
@@ -3189,22 +3189,22 @@
                                         <span class="help-block">Seleccione el Estado Civil</span>
                                     </div><br>
                                 </div>
-                               
+
                             </div>
-                            
+
                         </div>
                             <div class="row text-center">
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <br>
-                                
+
                                         <a href="{!! url('economic_complement/'.$economic_complement->id) !!}" data-target="#" class="btn btn-raised btn-warning">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;&nbsp;</a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-raised btn-success">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;</button>
                                     </div>
                                 </div>
                             </div>
                     {!! Form::close() !!}
-                </div>    
+                </div>
                 </div>
             </div>
         </div>
@@ -3213,19 +3213,19 @@
     @if($has_edit_state)
 
     <form  action="{{url('change_state')}}" method="POST">
-            
-        
+
+
         <div id="change-state-modal" class="modal fade modal-default" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                 <input type="hidden" name="_token" value="{{ csrf_token() }}">  
+                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Cambiar Estado del Tramite</h4>
               </div>
               <div class="modal-body">
                 <label> Tipo de Pago</label><br>
-            
+
                 <select class="form-control" name ="state_id" data-bind="options: lista, optionsText: 'name', optionsValue: 'id' ,value: state_id" >
                 </select>
                 {{-- <label data-bind="value: listaEstados">  aa</label> --}}
@@ -3233,8 +3233,8 @@
                 <div data-bind="visible: isCheck ">
                     <label> Numero de Cheque</label><br>
                     <input type="number" name="numero_cheque" class="form-control" >
-                    <input type="hidden" name="id_complemento" value="{{$economic_complement->id}}">    
-                    
+                    <input type="hidden" name="id_complemento" value="{{$economic_complement->id}}">
+
                 <!-- </div> -->
 
               </div>
@@ -3293,7 +3293,7 @@ $(document).ready(function() {
             autoWidth: false,
             ajax: {
             url: '{!! route('get_complement_obsevations') !!}',
-                data: function (d) {                  
+                data: function (d) {
                 d.economic_complement_id={{  $economic_complement->id}},
                 d.notes=1
                 }
@@ -3313,7 +3313,7 @@ $(document).ready(function() {
             autoWidth: false,
             ajax: {
             url: '{!! route('get_complement_obsevations_eliminated') !!}',
-                data: function (d) {                  
+                data: function (d) {
                 d.economic_complement_id={{  $economic_complement->id}},
                 d.notes=1
                 }
@@ -3327,11 +3327,11 @@ $(document).ready(function() {
                 // { data: 'action', name: 'action', orderable: false, searchable: false, bSortable: false, sClass: 'text-center' }
             ]
         });
-        
+
     var see = false;
     $('.observer').hide();
     $('#seeObservations').change(function(){
-        
+
             see = !see;
             if(see)
             {
@@ -3341,7 +3341,7 @@ $(document).ready(function() {
             }
         // console.log(see);
     });
-        
+
    //funciones modal de observaciones al affiliado
     $('#observationEditModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget) // Button that triggered the modal
@@ -3354,20 +3354,20 @@ $(document).ready(function() {
                 // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
-                
+
                 console.log(observation_message);
                 modal.find('.modal-body #is_enabled').change(function(){
                     if($(this).is(":checked")){
                         console.log('check');
-                        $('#check_title').text('Subsanado'); 
+                        $('#check_title').text('Subsanado');
                     }else
                     {
-                        $('#check_title').text('Vigente'); 
+                        $('#check_title').text('Vigente');
                         console.log('no check');
                     }
                 });
                 if(observation_enabled){
-                    $('#check_title').text('Subsanado'); 
+                    $('#check_title').text('Subsanado');
                 }
                 else{
                     $('#check_title').text('Vigente');
@@ -3376,7 +3376,7 @@ $(document).ready(function() {
                 modal.find('.modal-body #observation_id_edit').val(observation_id)
                 modal.find('.modal-body #message_edit').val(observation_message)
                 modal.find('.modal-body #is_enabled').prop('checked',observation_enabled)
-                
+
                 if(notes)
                 {
                     modal.find('.modal-body #observation_name').hide()
@@ -3386,43 +3386,43 @@ $(document).ready(function() {
                     }else{
                         modal.find('.modal-content #editModalTitle').text('Editar Nota')
                     }
-                    
+
                     // modal.find('.modal-body #observation_type_id_edit').hide()
                     modal.find('.modal-body .note').hide()
                     modal.find('.modal-body #observation_type_label').hide()
                     modal.find('.modal-body #is_note').prop('checked',true)
                     modal.find('.modal-body #observation_type_id_edit').prop('required',false);
-                    modal.find('.modal-body .selItem').hide() 
-                    
+                    modal.find('.modal-body .selItem').hide()
+
                 }else{
 
                     if(!observation_id)
                     {
                         modal.find('.modal-content #editModalTitle').text('Nueva Observación')
-                        modal.find('.modal-body .selItem').show() 
+                        modal.find('.modal-body .selItem').show()
                         modal.find('.modal-body #observation_type_id_edit').prop('required',true);
                         modal.find('.modal-body #observation_name').hide()
                     }else{
                         modal.find('.modal-content #editModalTitle').text('Editar Observación')
-                        modal.find('.modal-body .selItem').hide() 
+                        modal.find('.modal-body .selItem').hide()
                         modal.find('.modal-body #observation_type_id_edit').prop('required',false);
                         modal.find('.modal-body #observation_name').text(observation_name)
                         modal.find('.modal-body #observation_name').show()
-                        
+
                     }
 
                     // modal.find('.modal-body #observation_type_id_edit').show()
                     modal.find('.modal-body .note').show()
                     modal.find('.modal-body #observation_type_label').show()
                     modal.find('.modal-body #is_note').prop('checked',false)
-                    
+
                 }
-                
-                modal.find('.modal-body .isNote').hide()   
-              
+
+                modal.find('.modal-body .isNote').hide()
+
     });
 
-    
+
     $('#observationDeleteModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget) // Button that triggered the modal
                 var observation_id = button.data('observation-id')
@@ -3431,7 +3431,7 @@ $(document).ready(function() {
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
                 // console.log(observation_id)
-             
+
                 modal.find('.modal-body #observation_id_delete').val(observation_id)
                 modal.find('.modal-body #observation_name').text(observation_name)
     });
@@ -3497,7 +3497,7 @@ $(document).ready(function() {
 	function SelectRequeriments(requirements,requirements_ar) {
 
 		var self = this;
-		
+
 		@if ($status_documents)
 			self.requirements = ko.observableArray(ko.utils.arrayMap(requirements, function(document) {
 			return { id: document.eco_com_requirement_id, name: document.economic_complement_requirement.shortened, status: document.status };
@@ -3525,7 +3525,7 @@ $(document).ready(function() {
         @else
              self.DateDeathAffiliateValue = ko.observable(affiliate.date_death ? true : false);
         @endif
-       
+
 
         @if ($status_documents_ar)
             self.requirements_ar = ko.observableArray(ko.utils.arrayMap(requirements_ar, function(document) {
@@ -3565,9 +3565,9 @@ $(document).ready(function() {
         @endif
 	@endif
 
-	
 
-    var selectedlModel = function() {        
+
+    var selectedlModel = function() {
         var self = this;
         @if($eco_com_applicant->date_death)
             self.selected = ko.observable(true);
@@ -3589,7 +3589,7 @@ $(document).ready(function() {
         self.isDateUndifined = ko.observable({{json_encode($eco_com_applicant->is_duedate_undefined)}});
         self.activo = ko.observable(!{{json_encode($eco_com_applicant->is_duedate_undefined)}});
         self.inputVisible = function(){
-            self.activo(!self.isDateUndifined());  
+            self.activo(!self.isDateUndifined());
         };
 
         self.concurrenceCheck = ko.observable({{ ($economic_complement->aps_disability > 0 ) ? true:false }});
@@ -3597,13 +3597,13 @@ $(document).ready(function() {
         // console.log('self.select_tesoreria');
         self.sw_tesoreria = self.select_tesoreria==3?true:false;
 
-         //legal guardian   
+         //legal guardian
          @if($economic_complement->has_legal_guardian)
             var self = this;
             self.isDateUndifinedlg = ko.observable({{json_encode($economic_complement_legal_guardian->is_duedate_undefined)}});
             self.activolg = ko.observable(!{{json_encode($economic_complement_legal_guardian->is_du20edate_undefined)}});
             self.inputVisiblelg = function(){
-                self.activolg(!self.isDateUndifinedlg());  
+                self.activolg(!self.isDateUndifinedlg());
             };
          @endif
 
@@ -3638,7 +3638,7 @@ $(document).ready(function() {
     };
     @endif
 
-   
+
     console.log("no existe");
     @if($has_edit_state)
     ko.applyBindings(model,selectedlModel(),StateModel());
@@ -3757,7 +3757,7 @@ $(document).ready(function() {
                 { data: 'message', bSortable: false }
             ],
             "order": [[ 0, "desc" ]]
-            
+
         });
 
     });
