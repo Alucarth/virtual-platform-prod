@@ -1714,7 +1714,7 @@ class EconomicComplementController extends Controller
 
             if ($validator->fails()){
                 if ($economic_complement->semester == 'Primer') {
-                    return redirect('economic_complement_reception_second_step/' . $economic_complement->id)
+                    return back()
                     ->withErrors($validator)
                     ->withInput();
                 }
